@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { nanoid } from 'nanoid'
 import { Container, Title, TitleContacts } from './App.styles'
 import { TiContacts } from 'react-icons/ti'
@@ -6,16 +6,11 @@ import { IoIosContacts } from 'react-icons/io'
 import ContactForm from './components/ContactForm'
 import Filter from './components/Filter'
 import ContactList from './components/ContactList'
+import useLocalStorage from './hooks/useLocaleStorage'
 
 function App() {
-  const [contacts, setContacts] = useState(
-    () => JSON.parse(window.localStorage.getItem('contacts')) ?? [],
-  )
+  const [contacts, setContacts] = useLocalStorage('contacts', [])
   const [filter, setFilter] = useState('')
-
-  useEffect(() => {
-    window.localStorage.setItem('contacts', JSON.stringify(contacts))
-  }, [contacts])
 
   const handleFilterInputChange = (e) => {
     const { name, value } = e.currentTarget
