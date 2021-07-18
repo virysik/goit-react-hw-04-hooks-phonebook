@@ -3,6 +3,8 @@ import { nanoid } from 'nanoid'
 import { Container, Title, TitleContacts } from './App.styles'
 import { TiContacts } from 'react-icons/ti'
 import { IoIosContacts } from 'react-icons/io'
+import { GiButterflyWarning } from 'react-icons/gi'
+import toast, { Toaster } from 'react-hot-toast'
 import ContactForm from './components/ContactForm'
 import Filter from './components/Filter'
 import ContactList from './components/ContactList'
@@ -36,8 +38,10 @@ function App() {
     )
 
     if (contactExists) {
-      alert(`${contact.name} is already in contacts`)
-      return
+      return toast(`${contact.name} is already in contacts`, {
+        style: { color: '#456173' },
+        icon: <GiButterflyWarning />,
+      })
     }
 
     setContacts((prevContacts) => [contact, ...prevContacts])
@@ -72,6 +76,7 @@ function App() {
         contactsArr={getFilteredContact()}
         onDelete={deleteContact}
       />
+      <Toaster />
     </Container>
   )
 }
